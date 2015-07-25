@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Sunshine</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_refresh">Resfresh</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_settings">Preferences</string>
+    <string name="weather_detail">Weather detail goes here</string>
+    <string name="action_view_location">View Location Map</string>
+    <string name="action_share">Share</string>
+</resources>
