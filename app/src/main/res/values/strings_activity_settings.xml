@@ -7,4 +7,11 @@
     <string name="pref_units_key" tranlateable="false">units</string>
     <string name="pref_units_dialog_title" translatable="false">Select Units</string>
     <string name="pref_units_default_value">metric</string>
+
+    <!-- Value in SharedPreferences for metric temperature unit option [CHAR LIMIT=NONE] -->
+    <string name="pref_units_metric" translatable="false">metric</string>
+
+    <!-- Value in SharedPreferences for imperial temperature unit option [CHAR LIMIT=NONE] -->
+    <string name="pref_units_imperial" translatable="false">imperial</string>
+
 </resources>

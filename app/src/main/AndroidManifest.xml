@@ -10,6 +10,11 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
+        <provider
+            android:name=".data.WeatherProvider"
+            android:authorities="app.net.tomlins.android.sunshine">
+        </provider>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -21,7 +26,6 @@
 
             <!-- if we uncomment the filter below, when launching the intent from
             the app it presents possible applications able to handle the intent -->
-
             <!--intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <data android:scheme="geo" />
