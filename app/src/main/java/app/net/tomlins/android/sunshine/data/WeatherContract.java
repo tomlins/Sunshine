@@ -31,7 +31,7 @@ public class WeatherContract {
     // content authority is the package name for the app, which is guaranteed to be unique on the
     // device.
     //public static final String CONTENT_AUTHORITY = "com.example.android.sunshine.app";
-    public static final String CONTENT_AUTHORITY = "app.net.tomlins.android.sunshine.data";
+    public static final String CONTENT_AUTHORITY = "app.net.tomlins.android.sunshine";
 
     // Use CONTENT_AUTHORITY to create the base of all URI's which apps will use to contact
     // the content provider.
@@ -76,11 +76,11 @@ public class WeatherContract {
         // Longitufe of the location
         public static final String COLUMN_COORD_LONG = "coord_long";
 
-        public static final Uri CONTENT_URI =
-                BASE_CONTENT_URI.buildUpon().appendPath(PATH_LOCATION).build();
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_LOCATION).build();
 
         public static final String CONTENT_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
+
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_LOCATION;
 
