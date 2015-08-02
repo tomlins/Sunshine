@@ -29,7 +29,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import app.net.tomlins.android.sunshine.data.WeatherContract;
-import app.net.tomlins.android.sunshine.data.WeatherContract.WeatherEntry;
+import app.net.tomlins.android.sunshine.data.WeatherContract.WeatherTable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -116,14 +116,14 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
         long locationId;
 
         Cursor locationCursor = mContext.getContentResolver().query(
-                WeatherContract.LocationEntry.CONTENT_URI,
-                new String[]{(WeatherContract.LocationEntry._ID)},
-                WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING + "= ?",
+                WeatherContract.LocationTable.CONTENT_URI,
+                new String[]{(WeatherContract.LocationTable._ID)},
+                WeatherContract.LocationTable.COLUMN_LOCATION_SETTING + "= ?",
                 new String[]{locationSetting},
                 null);
 
         if (locationCursor.moveToFirst()) {
-            int locationIdIndex = locationCursor.getColumnIndex(WeatherContract.LocationEntry._ID);
+            int locationIdIndex = locationCursor.getColumnIndex(WeatherContract.LocationTable._ID);
             locationId = locationCursor.getLong(locationIdIndex);
         } else {
             // Now that the content provider is set up, inserting rows of data is pretty simple.
@@ -131,14 +131,14 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
             ContentValues locationValues = new ContentValues();
             // Then add the data, along with the corresponding name of the data type,
             // so the content provider knows what kind of value is being inserted.
-            locationValues.put(WeatherContract.LocationEntry.COLUMN_CITY_NAME, cityName);
-            locationValues.put(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING, locationSetting);
-            locationValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, lat);
-            locationValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LONG, lon);
+            locationValues.put(WeatherContract.LocationTable.COLUMN_CITY_NAME, cityName);
+            locationValues.put(WeatherContract.LocationTable.COLUMN_LOCATION_SETTING, locationSetting);
+            locationValues.put(WeatherContract.LocationTable.COLUMN_COORD_LAT, lat);
+            locationValues.put(WeatherContract.LocationTable.COLUMN_COORD_LONG, lon);
 
             // Finally, insert location data into the database.
             Uri insertedUri = mContext.getContentResolver().insert(
-                WeatherContract.LocationEntry.CONTENT_URI, locationValues);
+                WeatherContract.LocationTable.CONTENT_URI, locationValues);
 
             // The resulting URI contains the ID for the row.  Extract the locationId from the Uri.
             locationId = ContentUris.parseId(insertedUri);
@@ -159,11 +159,11 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
         for ( int i = 0; i < cvv.size(); i++ ) {
             ContentValues weatherValues = cvv.elementAt(i);
             String highAndLow = formatHighLows(
-                    weatherValues.getAsDouble(WeatherEntry.COLUMN_MAX_TEMP),
-                    weatherValues.getAsDouble(WeatherEntry.COLUMN_MIN_TEMP));
+                    weatherValues.getAsDouble(WeatherContract.WeatherTable.COLUMN_MAX_TEMP),
+                    weatherValues.getAsDouble(WeatherTable.COLUMN_MIN_TEMP));
             resultStrs[i] = getReadableDateString(
-                    weatherValues.getAsLong(WeatherEntry.COLUMN_DATE)) +
-                    " - " + weatherValues.getAsString(WeatherEntry.COLUMN_SHORT_DESC) +
+                    weatherValues.getAsLong(WeatherContract.WeatherTable.COLUMN_DATE)) +
+                    " - " + weatherValues.getAsString(WeatherContract.WeatherTable.COLUMN_SHORT_DESC) +
                     " - " + highAndLow;
         }
         return resultStrs;
@@ -195,7 +195,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
         final String OWM_LATITUDE = "lat";
         final String OWM_LONGITUDE = "lon";
 
-        // Weather information.  Each day's forecast info is an element of the "list" array.
+        // WeatherTable information.  Each day's forecast info is an element of the "list" array.
         final String OWM_LIST = "list";
 
         final String OWM_PRESSURE = "pressure";
@@ -283,20 +283,20 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
                 high = temperatureObject.getDouble(OWM_MAX);
                 low = temperatureObject.getDouble(OWM_MIN);
 
-                ContentValues weatherValues = new ContentValues();
+                ContentValues weatherContentValues = new ContentValues();
 
-                weatherValues.put(WeatherEntry.COLUMN_LOC_KEY, locationId);
-                weatherValues.put(WeatherEntry.COLUMN_DATE, dateTime);
-                weatherValues.put(WeatherEntry.COLUMN_HUMIDITY, humidity);
-                weatherValues.put(WeatherEntry.COLUMN_PRESSURE, pressure);
-                weatherValues.put(WeatherEntry.COLUMN_WIND_SPEED, windSpeed);
-                weatherValues.put(WeatherEntry.COLUMN_DEGREES, windDirection);
-                weatherValues.put(WeatherEntry.COLUMN_MAX_TEMP, high);
-                weatherValues.put(WeatherEntry.COLUMN_MIN_TEMP, low);
-                weatherValues.put(WeatherEntry.COLUMN_SHORT_DESC, description);
-                weatherValues.put(WeatherEntry.COLUMN_WEATHER_ID, weatherId);
+                weatherContentValues.put(WeatherTable.COLUMN_LOC_KEY, locationId);
+                weatherContentValues.put(WeatherTable.COLUMN_DATE, dateTime);
+                weatherContentValues.put(WeatherTable.COLUMN_HUMIDITY, humidity);
+                weatherContentValues.put(WeatherTable.COLUMN_PRESSURE, pressure);
+                weatherContentValues.put(WeatherTable.COLUMN_WIND_SPEED, windSpeed);
+                weatherContentValues.put(WeatherTable.COLUMN_DEGREES, windDirection);
+                weatherContentValues.put(WeatherTable.COLUMN_MAX_TEMP, high);
+                weatherContentValues.put(WeatherTable.COLUMN_MIN_TEMP, low);
+                weatherContentValues.put(WeatherTable.COLUMN_SHORT_DESC, description);
+                weatherContentValues.put(WeatherTable.COLUMN_WEATHER_ID, weatherId);
 
-                cVVector.add(weatherValues);
+                cVVector.add(weatherContentValues);
             }
 
             // add to database
@@ -304,12 +304,12 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
                 // Student: call bulkInsert to add the weatherEntries to the database here
                 ContentValues[] cArray = new ContentValues[cVVector.size()];
                 cVVector.toArray(cArray);
-                mContext.getContentResolver().bulkInsert(WeatherEntry.CONTENT_URI, cArray);
+                mContext.getContentResolver().bulkInsert(WeatherTable.CONTENT_URI, cArray);
             }
 
             // Sort order:  Ascending, by date.
-            String sortOrder = WeatherEntry.COLUMN_DATE + " ASC";
-            Uri weatherForLocationUri = WeatherEntry.buildWeatherLocationWithStartDate(
+            String sortOrder = WeatherContract.WeatherTable.COLUMN_DATE + " ASC";
+            Uri weatherForLocationUri = WeatherTable.buildWeatherLocationWithStartDate(
                     locationSetting, System.currentTimeMillis());
 
             // Students: Uncomment the next lines to display what what you stored in the bulkInsert

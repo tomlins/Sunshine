@@ -58,14 +58,13 @@ public class WeatherContract {
     /*
         Inner class that defines the table contents of the location table
         Students: This is where you will add the strings.  (Similar to what has been
-        done for WeatherEntry)
+        done for WeatherTable)
      */
-    public static final class LocationEntry implements BaseColumns {
+    public static final class LocationTable implements BaseColumns {
         public static final String TABLE_NAME = "location";
 
         // This is what is sent to openweathermap as the location query
         public static final String COLUMN_LOCATION_SETTING = "location_setting";
-
 
         // Human readable location as opposed to 90210
         public static final String COLUMN_CITY_NAME = "city_name";
@@ -92,7 +91,7 @@ public class WeatherContract {
     }
 
     /* Inner class that defines the table contents of the weather table */
-    public static final class WeatherEntry implements BaseColumns {
+    public static final class WeatherTable implements BaseColumns {
 
         public static final String TABLE_NAME = "weather";
 
@@ -100,7 +99,7 @@ public class WeatherContract {
         public static final String COLUMN_LOC_KEY = "location_id";
         // Date, stored as long in milliseconds since the epoch
         public static final String COLUMN_DATE = "date";
-        // Weather id as returned by API, to identify the icon to be used
+        // WeatherTable id as returned by API, to identify the icon to be used
         public static final String COLUMN_WEATHER_ID = "weather_id";
 
         // Short description and long description of the weather, as provided by API.

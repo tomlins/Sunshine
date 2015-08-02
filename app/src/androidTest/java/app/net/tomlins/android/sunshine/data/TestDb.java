@@ -20,8 +20,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.AndroidTestCase;
 
-import junit.framework.Test;
-
 import java.util.HashSet;
 
 public class TestDb extends AndroidTestCase {
@@ -55,8 +53,8 @@ public class TestDb extends AndroidTestCase {
         // Note that there will be another table in the DB that stores the
         // Android metadata (db version information)
         final HashSet<String> tableNameHashSet = new HashSet<String>();
-        tableNameHashSet.add(WeatherContract.LocationEntry.TABLE_NAME);
-        tableNameHashSet.add(WeatherContract.WeatherEntry.TABLE_NAME);
+        tableNameHashSet.add(WeatherContract.LocationTable.TABLE_NAME);
+        tableNameHashSet.add(WeatherContract.WeatherTable.TABLE_NAME);
 
         mContext.deleteDatabase(WeatherDbHelper.DATABASE_NAME);
         SQLiteDatabase db = new WeatherDbHelper(
@@ -80,7 +78,7 @@ public class TestDb extends AndroidTestCase {
                 tableNameHashSet.isEmpty());
 
         // now, do our tables contain the correct columns?
-        c = db.rawQuery("PRAGMA table_info(" + WeatherContract.LocationEntry.TABLE_NAME + ")",
+        c = db.rawQuery("PRAGMA table_info(" + WeatherContract.LocationTable.TABLE_NAME + ")",
                 null);
 
         assertTrue("Error: This means that we were unable to query the database for table information.",
@@ -88,11 +86,11 @@ public class TestDb extends AndroidTestCase {
 
         // Build a HashSet of all of the column names we want to look for
         final HashSet<String> locationColumnHashSet = new HashSet<String>();
-        locationColumnHashSet.add(WeatherContract.LocationEntry._ID);
-        locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_CITY_NAME);
-        locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_COORD_LAT);
-        locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_COORD_LONG);
-        locationColumnHashSet.add(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING);
+        locationColumnHashSet.add(WeatherContract.LocationTable._ID);
+        locationColumnHashSet.add(WeatherContract.LocationTable.COLUMN_CITY_NAME);
+        locationColumnHashSet.add(WeatherContract.LocationTable.COLUMN_COORD_LAT);
+        locationColumnHashSet.add(WeatherContract.LocationTable.COLUMN_COORD_LONG);
+        locationColumnHashSet.add(WeatherContract.LocationTable.COLUMN_LOCATION_SETTING);
 
         int columnNameIndex = c.getColumnIndex("name");
         do {
@@ -142,12 +140,12 @@ public class TestDb extends AndroidTestCase {
         ContentValues testValues = TestUtilities.createWeatherValues(locationRowId);
 
         // Insert ContentValues into database and get a row ID back
-        long weatherRowId = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, testValues);
+        long weatherRowId = db.insert(WeatherContract.WeatherTable.TABLE_NAME, null, testValues);
         assertTrue(weatherRowId != -1);
 
         // Query the database and receive a Cursor back
         Cursor cursor = db.query(
-                WeatherContract.WeatherEntry.TABLE_NAME,
+                WeatherContract.WeatherTable.TABLE_NAME,
                 null, // all columns
                 null, // Columns for the where clause
                 null, // Values for the where clause
@@ -187,14 +185,14 @@ public class TestDb extends AndroidTestCase {
 
         // Insert ContentValues into database and get a row ID back
         long locationRowId;
-        locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, testValues);
+        locationRowId = db.insert(WeatherContract.LocationTable.TABLE_NAME, null, testValues);
 
         // Verify we got a row back
         assertTrue(locationRowId != -1);
 
         // Ok, we should have data. Query the database and receive a Cursor back
         Cursor cursor = db.query(
-                WeatherContract.LocationEntry.TABLE_NAME,
+                WeatherContract.LocationTable.TABLE_NAME,
                 null, // all columns
                 null, // Columns for the where clause
                 null, // Values for the where clause

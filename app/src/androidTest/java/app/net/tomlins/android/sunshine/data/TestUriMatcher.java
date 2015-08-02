@@ -31,11 +31,11 @@ public class TestUriMatcher extends AndroidTestCase {
     private static final long TEST_LOCATION_ID = 10L;
 
     // content://com.example.android.sunshine.app/weather"
-    private static final Uri TEST_WEATHER_DIR = WeatherContract.WeatherEntry.CONTENT_URI;
-    private static final Uri TEST_WEATHER_WITH_LOCATION_DIR = WeatherContract.WeatherEntry.buildWeatherLocation(LOCATION_QUERY);
-    private static final Uri TEST_WEATHER_WITH_LOCATION_AND_DATE_DIR = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(LOCATION_QUERY, TEST_DATE);
+    private static final Uri TEST_WEATHER_DIR = WeatherContract.WeatherTable.CONTENT_URI;
+    private static final Uri TEST_WEATHER_WITH_LOCATION_DIR = WeatherContract.WeatherTable.buildWeatherLocation(LOCATION_QUERY);
+    private static final Uri TEST_WEATHER_WITH_LOCATION_AND_DATE_DIR = WeatherContract.WeatherTable.buildWeatherLocationWithDate(LOCATION_QUERY, TEST_DATE);
     // content://com.example.android.sunshine.app/location"
-    private static final Uri TEST_LOCATION_DIR = WeatherContract.LocationEntry.CONTENT_URI;
+    private static final Uri TEST_LOCATION_DIR = WeatherContract.LocationTable.CONTENT_URI;
 
     /*
         Students: This function tests that your UriMatcher returns the correct integer value

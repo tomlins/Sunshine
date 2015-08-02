@@ -48,38 +48,38 @@ public class TestUtilities extends AndroidTestCase {
      */
     static ContentValues createWeatherValues(long locationRowId) {
         ContentValues weatherValues = new ContentValues();
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_LOC_KEY, locationRowId);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DATE, TEST_DATE);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_DEGREES, 1.1);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_HUMIDITY, 1.2);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_PRESSURE, 1.3);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP, 75);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP, 65);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC, "Asteroids");
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED, 5.5);
-        weatherValues.put(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID, 321);
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_LOC_KEY, locationRowId);
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_DATE, TEST_DATE);
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_DEGREES, 1.1);
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_HUMIDITY, 1.2);
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_PRESSURE, 1.3);
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_MAX_TEMP, 75);
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_MIN_TEMP, 65);
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_SHORT_DESC, "Asteroids");
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_WIND_SPEED, 5.5);
+        weatherValues.put(WeatherContract.WeatherTable.COLUMN_WEATHER_ID, 321);
 
         return weatherValues;
     }
 
     /*
         Students: You can uncomment this helper function once you have finished creating the
-        LocationEntry part of the WeatherContract.
+        LocationTable part of the WeatherContract.
      */
     static ContentValues createNorthPoleLocationValues() {
         // Create a new map of values, where column names are the keys
         ContentValues testValues = new ContentValues();
-        testValues.put(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING, TEST_LOCATION);
-        testValues.put(WeatherContract.LocationEntry.COLUMN_CITY_NAME, "North Pole");
-        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, 64.7488);
-        testValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LONG, -147.353);
+        testValues.put(WeatherContract.LocationTable.COLUMN_LOCATION_SETTING, TEST_LOCATION);
+        testValues.put(WeatherContract.LocationTable.COLUMN_CITY_NAME, "North Pole");
+        testValues.put(WeatherContract.LocationTable.COLUMN_COORD_LAT, 64.7488);
+        testValues.put(WeatherContract.LocationTable.COLUMN_COORD_LONG, -147.353);
 
         return testValues;
     }
 
     /*
         Students: You can uncomment this function once you have finished creating the
-        LocationEntry part of the WeatherContract as well as the WeatherDbHelper.
+        LocationTable part of the WeatherContract as well as the WeatherDbHelper.
      */
     static long insertNorthPoleLocationValues(Context context) {
         // insert our test records into the database
@@ -88,7 +88,7 @@ public class TestUtilities extends AndroidTestCase {
         ContentValues testValues = TestUtilities.createNorthPoleLocationValues();
 
         long locationRowId;
-        locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, testValues);
+        locationRowId = db.insert(WeatherContract.LocationTable.TABLE_NAME, null, testValues);
 
         // Verify we got a row back.
         assertTrue("Error: Failure to insert North Pole Location Values", locationRowId != -1);

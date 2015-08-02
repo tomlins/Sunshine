@@ -35,8 +35,8 @@ public class TestFetchWeatherTask extends AndroidTestCase{
     @TargetApi(11)
     public void testAddLocation() {
         // start from a clean state
-        getContext().getContentResolver().delete(WeatherContract.LocationEntry.CONTENT_URI,
-                WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ?",
+        getContext().getContentResolver().delete(WeatherContract.LocationTable.CONTENT_URI,
+                WeatherContract.LocationTable.COLUMN_LOCATION_SETTING + " = ?",
                 new String[]{ADD_LOCATION_SETTING});
 
         FetchWeatherTask fwt = new FetchWeatherTask(getContext(), null);
@@ -52,15 +52,15 @@ public class TestFetchWeatherTask extends AndroidTestCase{
 
             // does the ID point to our location?
             Cursor locationCursor = getContext().getContentResolver().query(
-                    WeatherContract.LocationEntry.CONTENT_URI,
+                    WeatherContract.LocationTable.CONTENT_URI,
                     new String[]{
-                            WeatherContract.LocationEntry._ID,
-                            WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING,
-                            WeatherContract.LocationEntry.COLUMN_CITY_NAME,
-                            WeatherContract.LocationEntry.COLUMN_COORD_LAT,
-                            WeatherContract.LocationEntry.COLUMN_COORD_LONG
+                            WeatherContract.LocationTable._ID,
+                            WeatherContract.LocationTable.COLUMN_LOCATION_SETTING,
+                            WeatherContract.LocationTable.COLUMN_CITY_NAME,
+                            WeatherContract.LocationTable.COLUMN_COORD_LAT,
+                            WeatherContract.LocationTable.COLUMN_COORD_LONG
                     },
-                    WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ?",
+                    WeatherContract.LocationTable.COLUMN_LOCATION_SETTING + " = ?",
                     new String[]{ADD_LOCATION_SETTING},
                     null);
 
@@ -92,13 +92,13 @@ public class TestFetchWeatherTask extends AndroidTestCase{
                     locationId, newLocationId);
         }
         // reset our state back to normal
-        getContext().getContentResolver().delete(WeatherContract.LocationEntry.CONTENT_URI,
-                WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING + " = ?",
+        getContext().getContentResolver().delete(WeatherContract.LocationTable.CONTENT_URI,
+                WeatherContract.LocationTable.COLUMN_LOCATION_SETTING + " = ?",
                 new String[]{ADD_LOCATION_SETTING});
 
         // clean up the test so that other tests can use the content provider
         getContext().getContentResolver().
-                acquireContentProviderClient(WeatherContract.LocationEntry.CONTENT_URI).
+                acquireContentProviderClient(WeatherContract.LocationTable.CONTENT_URI).
                 getLocalContentProvider().shutdown();
     }
 }
