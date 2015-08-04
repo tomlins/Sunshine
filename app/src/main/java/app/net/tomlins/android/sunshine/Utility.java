@@ -27,7 +27,10 @@ import app.net.tomlins.android.sunshine.R;
 public class Utility {
     public static String getPreferredLocation(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-        return prefs.getString(context.getString(R.string.pref_location_key),
+
+        // This is code by JT to correct location setting
+        String state = "AU,";
+        return state + prefs.getString(context.getString(R.string.pref_location_key),
                 context.getString(R.string.pref_location_default_value));
     }
 

@@ -13,13 +13,27 @@ import android.view.MenuItem;
 public class MainActivity extends ActionBarActivity {
 
     private static final String LOG_TAG = MainActivity.class.getName();
-    private SharedPreferences sharedPref;
+    private final String FORECASTFRAGMENT_TAG = "FFTAG";
+    //    private SharedPreferences sharedPref;
+    private String mLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.i(LOG_TAG, "onCreate called");
         setContentView(R.layout.activity_main);
+        mLocation = Utility.getPreferredLocation(this);
+
+        // JT - commented this out as it was loading fragment twice. I must have
+        // done somethign slightly differently with my fragments to what Google did
+        // such as referencing the fragment from the main activity layout to avoid
+        // manually adding it like here
+
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.fragment, new ForecastFragment(), FORECASTFRAGMENT_TAG)
+//                    .commit();
+//        }
     }
 
     @Override
@@ -38,6 +52,16 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         Log.i(LOG_TAG, "onResume called");
+        String location = Utility.getPreferredLocation(this);
+        // update the location in our second pane using the fragment manager
+        if (location != null && !location.equals(mLocation)) {
+            //ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentByTag(FORECASTFRAGMENT_TAG);
+            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+            if (null != ff) {
+                ff.onLocationChanged();
+            }
+            mLocation = location;
+        }
     }
 
     @Override
@@ -73,10 +97,10 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         if (id == R.id.action_view_location) {
-            sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            String postCode = sharedPref.getString(getString(R.string.pref_location_key),
-                    getString(R.string.pref_location_default_value));
-
+            //sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+            //String postCode = sharedPref.getString(getString(R.string.pref_location_key),
+            //        getString(R.string.pref_location_default_value));
+            String postCode = Utility.getPreferredLocation(this);
             Uri geoLocation = Uri.parse("geo:0,0?q=australia+" + postCode);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(geoLocation);
