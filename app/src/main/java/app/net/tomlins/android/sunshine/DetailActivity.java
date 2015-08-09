@@ -18,26 +18,10 @@ package app.net.tomlins.android.sunshine;
 
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-
-import android.support.v4.content.CursorLoader;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
-import android.support.v4.content.Loader;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v7.widget.ShareActionProvider;
-import android.widget.TextView;
-
-import app.net.tomlins.android.sunshine.data.WeatherContract;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -48,8 +32,18 @@ public class DetailActivity extends ActionBarActivity {
         setContentView(R.layout.activity_weather_detail);
 
         if (savedInstanceState == null) {
+
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
+
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(DetailFragment.DETAIL_URI, getIntent().getData());
+
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(arguments);
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.weather_detail_container, new DetailFragment(), "DetailFragment")
+                    .add(R.id.weather_detail_container, fragment)
                     .commit();
         }
 
