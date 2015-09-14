@@ -42,4 +42,10 @@
     <string name="weather_detail">Weather detail goes here</string>
     <string name="action_view_location">View Location Map</string>
     <string name="action_share">Share</string>
+
+    <!-- Account type (for sync-adapter authenticator) -->
+    <!-- SyncAdapter related -->
+    <string name="sync_account_type">sunshine.example.com</string>
+    <string name="content_authority">app.net.tomlins.android.sunshine</string>
+
 </resources>
