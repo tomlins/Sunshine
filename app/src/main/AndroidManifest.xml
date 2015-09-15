@@ -55,9 +55,10 @@
                 android:value="app.net.tomlins.android.sunshine.MainActivity" />
         </activity>
 
+        <!--
         <service android:name=".service.SunshineService"/>
-
         <receiver android:name=".service.SunshineService$AlarmReceiver" android:enabled="true"/>
+        -->
 
         <!-- dummy auth service - we do not use one for our app -->
         <service android:name=".sync.SunshineAuthenticatorService">

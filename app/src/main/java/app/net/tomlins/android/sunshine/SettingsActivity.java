@@ -4,11 +4,14 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
+import app.net.tomlins.android.sunshine.sync.SunshineSyncAdapter;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -59,7 +62,9 @@ public class SettingsActivity extends PreferenceActivity
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
+
         String stringValue = value.toString();
+
         if (preference instanceof ListPreference) {
             // For list preferences, look up the correct display value in
             // the preference's 'entries' list (since they have separate labels/values).
@@ -70,11 +75,17 @@ public class SettingsActivity extends PreferenceActivity
                 Log.i(LOG_TAG, "Selected units preference, " + selectedListPreferenceItem);
                 preference.setSummary(selectedListPreferenceItem);
             }
-        } else {
+        } else if (preference instanceof EditTextPreference){
             // For other preferences, set the summary to the value's simple string representation.
             Log.i(LOG_TAG, "Edit Location preference, " + stringValue);
             preference.setSummary(stringValue);
+        } else {
+            Log.i(LOG_TAG, "Enable notifications preference, " + stringValue);
+            preference.setSummary(stringValue);
         }
+
+        SunshineSyncAdapter.syncImmediately(this);
+
         return true;
     }
 
