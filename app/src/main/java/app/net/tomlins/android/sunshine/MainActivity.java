@@ -127,18 +127,21 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
-        if (id == R.id.action_view_location) {
-            //sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-            //String postCode = sharedPref.getString(getString(R.string.pref_location_key),
-            //        getString(R.string.pref_location_default_value));
-            String postCode = Utility.getPreferredLocation(this);
-            Uri geoLocation = Uri.parse("geo:0,0?q=australia+" + postCode);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(geoLocation);
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            }
-        }
+
+        // The following was moved to ForcastFragment openPreferredLocationInMap
+
+//        if (id == R.id.action_view_location) {
+//            //sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+//            //String postCode = sharedPref.getString(getString(R.string.pref_location_key),
+//            //        getString(R.string.pref_location_default_value));
+//            String postCode = Utility.getPreferredLocation(this);
+//            Uri geoLocation = Uri.parse("geo:0,0?q=australia+" + postCode);
+//            Intent intent = new Intent(Intent.ACTION_VIEW);
+//            intent.setData(geoLocation);
+//            if (intent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(intent);
+//            }
+//        }
 
         return super.onOptionsItemSelected(item);
     }
